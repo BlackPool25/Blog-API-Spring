@@ -1,4 +1,7 @@
 package com.learnspring.blogapi.repos;
 
-public interface PostRepo {
+import com.learnspring.blogapi.models.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PostRepo extends JpaRepository<Post, Integer> {
 }

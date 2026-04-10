@@ -1,4 +1,10 @@
 package com.learnspring.blogapi.repos;
 
-public interface CommentRepo {
+import com.learnspring.blogapi.models.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CommentRepo extends JpaRepository<Comment, Integer> {
+
 }

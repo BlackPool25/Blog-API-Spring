@@ -1,6 +1,6 @@
-package com.learnspring.blogapi.dto;
+package com.learnspring.blogapi.dto.request;
 
-import org.antlr.v4.runtime.misc.NotNull;
+
 
 public class PostRequest {
     private String title;
