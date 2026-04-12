@@ -20,21 +20,26 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/all")
-    public List<Post> getAllPosts(){
+    public List<PostResponse> getAllPosts(){
         return postService.getAllPosts();
     }
 
-    @GetMapping("/byId")
-    public Post getPostById(Integer postId) {
+    @GetMapping("/{postId}")
+    public PostResponse getPostById(@PathVariable Integer postId) {
         return postService.getPostById(postId);
     }
 
     @PostMapping("/create-post")
     public ResponseEntity<PostResponse> createPost(
-            @RequestBody PostRequest request,
-            Authentication authentication) {
-        PostResponse response =  postService.createPost(request, authentication);
+            @RequestBody PostRequest request) {
+        PostResponse response =  postService.createPost(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/delete-all")
+    public String deletePosts() {
+        return postService.deletePosts();
+
     }
 }

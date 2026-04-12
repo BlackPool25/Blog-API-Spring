@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,35 +23,54 @@ public class PostService {
     @Autowired
     private UsersRepo userRepo;
 
-    public List<Post> getAllPosts() {
-        return postRepo.findAll();
+    private PostResponse setValues(Post post) {
+        PostResponse dto = new PostResponse();
+        dto.setPostId(post.getPostId());
+        dto.setPublisherName(post.getPostPublisher().getUsername());
+        dto.setPublisherId(post.getPostPublisher().getUserId());
+        dto.setTimestamp(post.getTimestamp());
+        dto.setTitle(post.getPostTitle());
+        dto.setContent(post.getPostContent());
+
+        return dto;
     }
 
-    public Post getPostById(Integer postId) {
-        return postRepo.findById(postId).orElse(new Post());
+    public List<PostResponse> getAllPosts() {
+        List<Post> posts = postRepo.findAll();
+
+        List<PostResponse> response = new ArrayList<>();
+
+        for(Post post : posts) {
+            response.add(setValues(post));
+        }
+
+        return response;
     }
 
-    public PostResponse createPost(PostRequest request, Authentication authentication) {
+    public PostResponse getPostById(Integer postId) {
+        Post post = postRepo.findById(postId).orElseThrow(
+                () -> new RuntimeException("Post not found")
+        );
 
-        String username = authentication.getName();
+        return setValues(post);
+    }
 
-        Users user = userRepo.findByUsername(username)
-                .orElseThrow( () -> new RuntimeException("User not found"));
-
+    public PostResponse createPost(PostRequest request) {
 
         Post Post = new Post();
         Post.setPostTitle(request.getTitle());
         Post.setPostContent(request.getContent());
-        Post.setPostPublisher(user);
+        Post.setPostPublisher(userRepo.findByUsername(request.getPublisher()).orElseThrow(
+                () -> new RuntimeException("Invalid Username")
+        ));
         Post savedPost = postRepo.save(Post);
 
-        PostResponse response = new PostResponse();
-        response.setId(savedPost.getPostId());
-        response.setTitle(savedPost.getPostTitle());
-        response.setContent(savedPost.getPostContent());
-        response.setTimestamp(savedPost.getTimestamp());
-        response.setAuthorName(savedPost.getPostPublisher().getUsername());
+        return setValues(savedPost);
+    }
 
-        return response;
+    public String deletePosts() {
+        postRepo.deleteAll();
+
+        return "Deleted all posts successfully";
     }
 }

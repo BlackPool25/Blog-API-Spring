@@ -1,5 +1,6 @@
 package com.learnspring.blogapi.models;
 
+import com.learnspring.blogapi.dto.response.UsersResponse;
 import jakarta.persistence.*;
 import org.apache.catalina.User;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,17 +11,19 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Table(name = "posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
     private String postTitle;
 
-    @ManyToOne
-    @JoinColumn(name = "post_publisher_user_id")
-    private Users postPublisher;
-
+    @Column(length = 10000)
     private String postContent;
+
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private Users postPublisher;
 
     @CreationTimestamp
     @Column(updatable = false)

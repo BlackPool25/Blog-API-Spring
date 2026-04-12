@@ -5,17 +5,18 @@ package com.learnspring.blogapi.dto.request;
 public class PostRequest {
     private String title;
     private String content;
-
-    public PostRequest() {
-    }
-
-    public PostRequest(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
+    private String publisher;
 
     public String getTitle() {
         return title;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setAuthor(String publisher) {
+        this.publisher = publisher;
     }
 
     public String getContent() {

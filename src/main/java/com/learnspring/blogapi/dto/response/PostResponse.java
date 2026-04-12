@@ -3,26 +3,17 @@ package com.learnspring.blogapi.dto.response;
 import java.time.LocalDateTime;
 
 public class PostResponse {
-    private Integer id;
+    private Integer publisherId;
+    private String publisherName;
+    private Integer postId;
     private String title;
     private String content;
     private LocalDateTime timestamp;
-    private String authorName;
 
     public PostResponse() {
     }
 
-    public PostResponse(Integer id, String title, String content, LocalDateTime timestamp, String authorName) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.timestamp = timestamp;
-        this.authorName = authorName;
-    }
 
-    public Integer getId() {
-        return id;
-    }
 
     public String getTitle() {
         return title;
@@ -36,12 +27,8 @@ public class PostResponse {
         return timestamp;
     }
 
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public String getPublisherName() {
+        return publisherName;
     }
 
     public void setTitle(String title) {
@@ -56,7 +43,35 @@ public class PostResponse {
         this.timestamp = timestamp;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
+    }
+
+    public Integer getPublisherId() {
+        return publisherId;
+    }
+
+    public void setPublisherId(Integer publisherId) {
+        this.publisherId = publisherId;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    @Override
+    public String toString() {
+        return "PostResponse{" +
+                "publisherId=" + publisherId +
+                ", publisherName='" + publisherName + '\'' +
+                ", postId=" + postId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }

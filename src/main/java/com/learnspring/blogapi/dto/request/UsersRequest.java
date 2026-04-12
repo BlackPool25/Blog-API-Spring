@@ -1,14 +1,7 @@
 package com.learnspring.blogapi.dto.request;
 
-public class UserRequest {
+public class UsersRequest {
     private String Username;
-
-    public UserRequest() {
-    }
-
-    public UserRequest(String username) {
-        Username = username;
-    }
 
     public String getUsername() {
         return Username;
