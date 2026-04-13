@@ -1,74 +1,64 @@
 package com.learnspring.blogapi.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, name = "comment_id")
+    private Integer commentId;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "post_id_post_id", nullable = false)
+    @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "user_user_id")
-    private Users user;
+    @JoinColumn(name = "users_id", nullable = false)
+    private Users commenter;
 
-    private String comment;
+    private String commentContent;
+
+    @CreationTimestamp
+    @Column(updatable = false)
     private Timestamp timestamp;
 
     public Comment() {
     }
 
-    public Comment(Integer id, Post post, Users user, String comment, Timestamp timestamp) {
-        this.id = id;
-        this.post = post;
-        this.user = user;
-        this.comment = comment;
-        this.timestamp = timestamp;
+    public Integer getCommentId() {
+        return commentId;
     }
 
-    public Integer getId() {
-        return id;
+    public Users getCommenter() {
+        return commenter;
+    }
+
+    public void setCommenter(Users commenter) {
+        this.commenter = commenter;
     }
 
     public Post getPost() {
         return post;
     }
 
-    public Users getUser() {
-        return user;
-    }
-
-    public String getComment() {
-        return comment;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getCommentContent() {
+        return commentContent;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 }

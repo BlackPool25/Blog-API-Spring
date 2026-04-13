@@ -11,6 +11,10 @@ public class PostRequest {
         return title;
     }
 
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
     public String getPublisher() {
         return publisher;
     }

@@ -1,6 +1,7 @@
 package com.learnspring.blogapi.controllers;
 
 
+import com.learnspring.blogapi.dto.request.LoginRequest;
 import com.learnspring.blogapi.dto.request.UsersRequest;
 import com.learnspring.blogapi.dto.response.UsersResponse;
 import com.learnspring.blogapi.models.Users;
@@ -30,6 +31,11 @@ public class UsersController {
     @GetMapping("/{username}")
     public UsersResponse getUser(@PathVariable String username) {
         return ResponseEntity.ok(usersService.getUserByUsername(username)).getBody();
+    }
+
+    @PostMapping("/api/login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        return usersService.verify(loginRequest);
     }
 
     @PostMapping("/add-user")
