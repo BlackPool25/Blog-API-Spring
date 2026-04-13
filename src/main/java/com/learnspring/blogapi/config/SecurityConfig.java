@@ -37,7 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/add-user", "/login", "/users/api/login").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
 //                .formLogin(form -> form
 //                        .defaultSuccessUrl("/", true))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
