@@ -1,4 +1,11 @@
 package com.learnspring.blogapi.repos;
 
-public interface CategoryRepo {
+import com.learnspring.blogapi.dto.response.PostResponse;
+import com.learnspring.blogapi.models.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface CategoryRepo extends JpaRepository<Category, Integer> {
+    Category findCategoryByCategoryName(String categoryName);
 }

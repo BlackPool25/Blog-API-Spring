@@ -1,9 +1,11 @@
 package com.learnspring.blogapi.services;
 
 import com.learnspring.blogapi.dto.response.PostResponse;
+import com.learnspring.blogapi.models.Category;
 import com.learnspring.blogapi.models.Post;
 import com.learnspring.blogapi.dto.request.PostRequest;
 import com.learnspring.blogapi.models.Users;
+import com.learnspring.blogapi.repos.CategoryRepo;
 import com.learnspring.blogapi.repos.PostRepo;
 import com.learnspring.blogapi.repos.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class PostService {
 
     @Autowired
     private UsersRepo userRepo;
+    @Autowired
+    private CategoryRepo categoryRepo;
 
     private PostResponse setValues(Post post) {
         PostResponse dto = new PostResponse();
@@ -72,5 +76,30 @@ public class PostService {
         postRepo.deleteAll();
 
         return "Deleted all posts successfully";
+    }
+
+    public String getCategories(Integer postId) {
+        Post post = postRepo.findById(postId)
+                .orElseThrow(
+                        () -> new RuntimeException("Post not found")
+                );
+
+        return post.getCategories().toString();
+    }
+
+    public List<Category> addCategory(Integer postId, Integer categoryId) {
+        Post post = postRepo.findById(postId)
+                .orElseThrow(
+                        () -> new RuntimeException("Post not found")
+                );
+
+        Category category = categoryRepo.findById(categoryId)
+                        .orElseThrow(
+                                () -> new RuntimeException("Category not found")
+                        );
+
+        post.getCategories().add(category);
+
+        return post.getCategories();
     }
 }

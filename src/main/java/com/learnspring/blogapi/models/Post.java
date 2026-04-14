@@ -9,6 +9,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -28,6 +29,15 @@ public class Post {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime timestamp;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "post_categories",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 
     public Users getPostPublisher() {
         return postPublisher;
@@ -80,15 +90,23 @@ public class Post {
         this.postTitle = postTitle;
     }
 
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 
     @Override
     public String toString() {
         return "Post{" +
                 "postId=" + postId +
                 ", postTitle='" + postTitle + '\'' +
-                ", postPublisher=" + postPublisher +
                 ", postContent='" + postContent + '\'' +
+                ", postPublisher=" + postPublisher +
                 ", timestamp=" + timestamp +
+                ", categories=" + categories +
                 '}';
     }
 }
